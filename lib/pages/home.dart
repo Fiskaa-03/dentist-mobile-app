@@ -1,10 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:dentist_app/models/user.dart';
 import 'package:dentist_app/services/authentication.dart';
-import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
-  const Home({super.key, required this.userUid});
-  final String userUid;
+  const Home({super.key, required this.user});
+
+  final UserModel? user;
 
   @override
   State<Home> createState() => _HomeState();
@@ -12,20 +13,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final AuthenticationService _authenticationService = AuthenticationService();
-  UserModel? _user;
-
-  @override
-  void initState() {
-    super.initState();
-    _fetchUser();
-  }
-
-  _fetchUser() async {
-    final user = await _authenticationService.getUser(widget.userUid);
-    setState(() {
-      _user = user;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,30 +23,6 @@ class _HomeState extends State<Home> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SizedBox(height: 30),
-            SizedBox(
-              width: 350,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(2.0),
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(50)),
-                    ),
-                    child: IconButton(
-                      onPressed: () {
-                        _authenticationService.signOut();
-                      },
-                      icon: Image.asset(
-                        "assets/icons/logout.png",
-                        width: 25,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
             const Text(
               "APPOINTMENT",
               style: TextStyle(

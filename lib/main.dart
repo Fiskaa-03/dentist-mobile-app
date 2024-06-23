@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:dentist_app/authentication_gate.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -8,6 +9,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  final cameras = await availableCameras();
+  final firstCamera = cameras.first;
   runApp(const App());
 }
 
